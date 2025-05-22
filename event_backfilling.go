@@ -170,7 +170,7 @@ func IsComplexType(v interface{}) bool {
 // 	startTime := time.Now()
 
 // 	for {
-// 		events, nextCursor, err := fetchEvents(cursor)
+// 		events, nextCursor, err := FetchEvents(cursor)
 // 		if err != nil {
 // 			fmt.Printf("Error fetching events: %v\n", err)
 // 			retryCount++
@@ -217,7 +217,7 @@ func IsComplexType(v interface{}) bool {
 // 	fmt.Printf("Fetched a total of %d events in %s\n", len(allEvents), elapsedTime)
 // 	fmt.Println("Saving events to CSV file...")
 
-// 	err := saveEventsToCSV(allEvents, *filename)
+// 	err := SaveEventsToCSV(allEvents, *filename)
 // 	if err != nil {
 // 		log.Fatalf("Failed to save events to CSV: %v", err)
 // 	}
