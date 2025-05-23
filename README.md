@@ -40,11 +40,11 @@ cd suitrace
 
 ### 1. Event Backfilling
 
-Fetch the last 100 events and save to a CSV file:
+Fetch a specified number of recent events and save them to a CSV file:
 
 ```bash
-go run event_backfilling.go --limit=100 --filename=events.csv
-```
+go run event_backfilling.go --limit=<number_of_events> --filename=<output_filename>.csv
+
 
 ---
 
@@ -53,17 +53,17 @@ go run event_backfilling.go --limit=100 --filename=events.csv
 Trace the full history of a specific object with verbose and debug output, and save to JSON:
 
 ```bash
-go run object_history.go -object=0x2c8d603bc51326b8c13cef9dd07031a408a48dddb541963357661df5d3204809 -verbose -debug -output=history.json
+go run object_history.go -object=<object_id> -verbose -debug -output=<output_filename>.json
 ```
 
 ---
 
 ### 3. Checkpoint Range Fetching
 
-Fetch all events between checkpoint 1000 and 1010, output as JSON:
+Fetch all events or activities that occurred between two checkpoints, with customizable output format:
 
 ```bash
-go run block_ranger.go -range=1000-1010 -output=join.json -format=json
+go run block_ranger.go -range=<start_checkpoint>-<end_checkpoint> -output=<output_filename> -format=<json|csv>
 ```
 
 ---
