@@ -44,8 +44,7 @@ Fetch a specified number of recent events and save them to a CSV file:
 
 ```bash
 go run event_backfilling.go --limit=<number_of_events> --filename=<output_filename>.csv
-
-
+```
 ---
 
 ### 2. Object History Tracing
