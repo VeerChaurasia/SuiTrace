@@ -4,18 +4,18 @@ import (
 	"bytes"
 	"encoding/csv"
 	"encoding/json"
-	// "flag"
+	"flag"
 	"fmt"
 	"io/ioutil"
-	// "log"
+	"log"
 	"net/http"
 	"os"
-	// "time"
+	"time"
 )
 
-// const (
-// 	rpcURL = "https://rpc.mainnet.sui.io" // Sui mainnet RPC
-// )
+const (
+	rpcURL = "https://rpc.mainnet.sui.io" // Sui mainnet RPC
+)
 
 func FetchEvents(cursor interface{}) ([]map[string]interface{}, interface{}, error) {
 	// Using the "All" filter with an empty array as specified in the error message
@@ -153,74 +153,74 @@ func IsComplexType(v interface{}) bool {
 	}
 }
 
-// func main() {
-// 	// CLI flags
-// 	limit := flag.Int("limit", 200, "Number of events to fetch (max)")
-// 	filename := flag.String("filename", "events.csv", "Output CSV filename")
-// 	flag.Parse()
+func main() {
+	// CLI flags
+	limit := flag.Int("limit", 200, "Number of events to fetch (max)")
+	filename := flag.String("filename", "events.csv", "Output CSV filename")
+	flag.Parse()
 
-// 	fmt.Println("Starting event backfill...")
+	fmt.Println("Starting event backfill...")
 
-// 	allEvents := []map[string]interface{}{}
-// 	var cursor interface{}
-// 	totalFetched := 0
-// 	maxRetries := 3
-// 	retryCount := 0
+	allEvents := []map[string]interface{}{}
+	var cursor interface{}
+	totalFetched := 0
+	maxRetries := 3
+	retryCount := 0
 
-// 	startTime := time.Now()
+	startTime := time.Now()
 
-// 	for {
-// 		events, nextCursor, err := FetchEvents(cursor)
-// 		if err != nil {
-// 			fmt.Printf("Error fetching events: %v\n", err)
-// 			retryCount++
+	for {
+		events, nextCursor, err := FetchEvents(cursor)
+		if err != nil {
+			fmt.Printf("Error fetching events: %v\n", err)
+			retryCount++
 
-// 			if retryCount > maxRetries {
-// 				log.Fatalf("Failed to fetch events after %d retries: %v", maxRetries, err)
-// 			}
+			if retryCount > maxRetries {
+				log.Fatalf("Failed to fetch events after %d retries: %v", maxRetries, err)
+			}
 
-// 			fmt.Printf("Retry attempt %d of %d\n", retryCount, maxRetries)
-// 			continue
-// 		}
+			fmt.Printf("Retry attempt %d of %d\n", retryCount, maxRetries)
+			continue
+		}
 
-// 		retryCount = 0
+		retryCount = 0
 
-// 		if len(events) == 0 {
-// 			fmt.Println("No more events found!")
-// 			break
-// 		}
+		if len(events) == 0 {
+			fmt.Println("No more events found!")
+			break
+		}
 
-// 		allEvents = append(allEvents, events...)
-// 		totalFetched += len(events)
-// 		fmt.Printf("Fetched %d events so far...\n", totalFetched)
+		allEvents = append(allEvents, events...)
+		totalFetched += len(events)
+		fmt.Printf("Fetched %d events so far...\n", totalFetched)
 
-// 		cursor = nextCursor
-// 		if cursor == nil {
-// 			fmt.Println("No pagination cursor returned - we've reached the end")
-// 			break
-// 		}
+		cursor = nextCursor
+		if cursor == nil {
+			fmt.Println("No pagination cursor returned - we've reached the end")
+			break
+		}
 
-// 		// Stop if user-defined limit reached
-// 		if totalFetched >= *limit {
-// 			fmt.Printf("Reached user-defined limit of %d events\n", *limit)
-// 			break
-// 		}
-// 	}
+		// Stop if user-defined limit reached
+		if totalFetched >= *limit {
+			fmt.Printf("Reached user-defined limit of %d events\n", *limit)
+			break
+		}
+	}
 
-// 	elapsedTime := time.Since(startTime)
+	elapsedTime := time.Since(startTime)
 
-// 	if len(allEvents) == 0 {
-// 		fmt.Println("No events fetched!")
-// 		return
-// 	}
+	if len(allEvents) == 0 {
+		fmt.Println("No events fetched!")
+		return
+	}
 
-// 	fmt.Printf("Fetched a total of %d events in %s\n", len(allEvents), elapsedTime)
-// 	fmt.Println("Saving events to CSV file...")
+	fmt.Printf("Fetched a total of %d events in %s\n", len(allEvents), elapsedTime)
+	fmt.Println("Saving events to CSV file...")
 
-// 	err := SaveEventsToCSV(allEvents, *filename)
-// 	if err != nil {
-// 		log.Fatalf("Failed to save events to CSV: %v", err)
-// 	}
+	err := SaveEventsToCSV(allEvents, *filename)
+	if err != nil {
+		log.Fatalf("Failed to save events to CSV: %v", err)
+	}
 
-// 	fmt.Printf("Done! %d events saved to %s 🎉\n", len(allEvents), *filename)
-// }
+	fmt.Printf("Done! %d events saved to %s 🎉\n", len(allEvents), *filename)
+}

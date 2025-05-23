@@ -15,7 +15,8 @@ import (
 )
 
 const (
-	rpcURL = "https://rpc.mainnet.sui.io" // Sui mainnet RPC
+	// Exported constant for RPC URL
+	RpcURL = "https://rpc.mainnet.sui.io" // Sui mainnet RPC
 )
 
 type ObjectState struct {
@@ -61,9 +62,9 @@ func MakeRPCCall(method string, params []interface{}) (map[string]interface{}, e
 		return nil, fmt.Errorf("failed to marshal payload: %v", err)
 	}
 	
-	DebugPrint("Sending request to %s: %s", rpcURL, string(payloadBytes))
+	DebugPrint("Sending request to %s: %s", RpcURL, string(payloadBytes))
 	
-	resp, err := http.Post(rpcURL, "application/json", bytes.NewReader(payloadBytes))
+	resp, err := http.Post(RpcURL, "application/json", bytes.NewReader(payloadBytes))
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %v", err)
 	}
